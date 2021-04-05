@@ -5,8 +5,9 @@ using UnityEngine;
 public class jugadorControlador : MonoBehaviour
 {
     public float velocidad;
-    public float velocidad_salto = 5;
+    public float velocidad_salto ;
     private Rigidbody rb;
+    bool isJump = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,17 +17,17 @@ public class jugadorControlador : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-       float MovHorizontal = Input.GetAxis("Horizontal");
+        isJump = Input.GetButtonDown("Jump");
+        if (isJump)
+        {
+            Vector3 jumpMov = new Vector3(0, velocidad_salto, 0);
+            rb.AddForce((jumpMov), ForceMode.Impulse);
+        }
+        float MovHorizontal = Input.GetAxis("Horizontal");
         float MovVertical = Input.GetAxis("Vertical");
         Vector3 Movimiento = new Vector3(MovHorizontal,0.0f,MovVertical);
         rb.AddForce(Movimiento*velocidad);
         
 
-
-        if (Input.GetKeyDown(KeyCode.Space))
-         {
-               {rb.AddForce(Vector3.up * velocidad, ForceMode.Impulse);}
-
-         }
     }
 }
